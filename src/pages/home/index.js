@@ -9,13 +9,10 @@ import styles from './styles';
 const Home = () => {
     const navigation = useNavigation()
 
-    function logout(){
-        Alert.alert('Falou Dheph :-)','intérci')
-    }
     return (
         <View style={globalStyles.container}>
 
-            <View style={styles.header}>
+            <View style={globalStyles.header}>
                 <Text style={styles.hallo}>Olá Dheph ;)</Text>
             </View>
 
@@ -25,7 +22,7 @@ const Home = () => {
 
                 <View style={styles.menu}>
 
-                    <TouchableOpacity style={styles.options}>
+                    <TouchableOpacity style={styles.options} onPress={() => navigation.navigate('newcheck')}>
                         <Text style={{ color: 'white' }}>
                         <Feather name="box" size={21} color="#aeb2b5" />
                             Novo Check 
@@ -34,7 +31,7 @@ const Home = () => {
 
                     <TouchableOpacity style={styles.options}>
                         <Text style={{ color: 'white' }}>
-                        <Feather name="box" size={21} color="#aeb2b5" />
+                        <Feather name="codepen" size={21} color="#aeb2b5" />
                             Ultimos Check 
                         </Text>
                     </TouchableOpacity>

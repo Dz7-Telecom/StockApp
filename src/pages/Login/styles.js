@@ -2,17 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     
-    header: {
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        paddingTop:50,
-        
-    },
+   
     logo: {
         width:100,
         height:100,
-        backgroundColor:'#0a293e',
+        backgroundColor:'#13161d',
         borderRadius:50,
     },
     logoContainer: {
@@ -22,7 +16,7 @@ export default StyleSheet.create({
         borderTopEndRadius:1,
         borderWidth:3,
         borderColor:'rgba(255,255,255,0.2)',
-        backgroundColor:"#aeb2b5",
+        backgroundColor:"#0a293e",
     },
 
 // --------Body----------------- // 

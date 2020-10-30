@@ -19,7 +19,7 @@ const Login = () => {
     return (
         <View style={globalStyles.container}>
 
-            <View style={styles.header}>
+            <View style={globalStyles.header}>
                 <View style={styles.logoContainer}>
                     <Image source={logo} style={styles.logo} />
                 </View>

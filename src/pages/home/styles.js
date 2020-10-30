@@ -3,14 +3,6 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 // -----------------Body--------------------//
 
-    header: {
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        paddingTop:50,
-    },
-
-// -----------------Body--------------------//
     body: {
         flex:4,
         justifyContent:'center',

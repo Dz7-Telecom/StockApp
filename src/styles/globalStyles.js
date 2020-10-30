@@ -6,5 +6,12 @@ export default StyleSheet.create({
         // backgroundColor:'#13161e',
         // backgroundColor:'#fff',
         paddingTop:Constants.statusBarHeight + 10,
-    }
+    },
+    header: {
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingTop:50,
+        
+    },
 })
