@@ -29,7 +29,7 @@ const Home = () => {
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.options}>
+                    <TouchableOpacity style={styles.options} onPress={() => navigation.navigate('lastcheck')}>
                         <Text style={{ color: 'white' }}>
                         <Feather name="codepen" size={21} color="#aeb2b5" />
                             Ultimos Check 

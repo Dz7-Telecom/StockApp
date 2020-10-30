@@ -40,7 +40,6 @@ const NewCheck = () => {
                     <View style={globalStyles.container}>
 
                         <View style={styles.modalHeader}>
-                            {/* <Image source={logo} style={{ marginTop: 20, width: 90, height: 90, backgroundColor: '#003352', borderRadius: 60 }} /> */}
                           
                             <TextInput 
                             style={styles.modalSearchText}
