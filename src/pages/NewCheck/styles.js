@@ -4,22 +4,42 @@ import Constants from 'expo-constants';
 export default StyleSheet.create({
 
     body: {
-        flex:1,
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#aeb2b5',
-        // borderRadius:90,
         borderTopLeftRadius:160,
         borderTopRightRadius:160,
         borderBottomStartRadius:100,
-        borderBottomEndRadius:100,   
+        borderBottomEndRadius:100,  
+        borderColor:'#0a293e',
+        borderWidth:15, 
+        marginBottom:5,
+        width:'100%',
+        height:'37%'
+    },
+
+    personImg: {
+        width:200,
+        height:179,
+        position:'absolute', 
+        bottom:232
+    },
+
+    hallo: {
+        fontSize:17,
+        backgroundColor:'transparent',
+        padding:20,
+        borderWidth:2,
+        borderColor:'#0a293e',
+        borderRadius:50,
+        borderBottomLeftRadius:1,
+        color:'#0a293e'
     },
 
     selection: {
         bottom:20,
         padding:10,
         backgroundColor:'#0a293e',
-        // borderRadius:50,
         width:'30%',
         height:'50%',
         borderTopLeftRadius:190,
@@ -83,17 +103,17 @@ export default StyleSheet.create({
         backgroundColor:"#0a293e",
         alignItems:'center',
         justifyContent:'center',
-        // borderRadius:20,
         borderTopLeftRadius:180,
         borderTopRightRadius:190,
         borderBottomStartRadius:200,
         borderBottomEndRadius:180,  
     },
     modalItemText:{
-        color:'#aeb2b5'
+        color:'#aeb2b5',
+        fontSize:17,
+        textAlign:'center'
     },
     modalItemsContainer: {
-        // bottom:10
     },
 
     modalItems: {

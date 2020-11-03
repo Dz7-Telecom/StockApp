@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    
    
     logo: {
         width:100,
@@ -17,6 +16,13 @@ export default StyleSheet.create({
         borderWidth:3,
         borderColor:'rgba(255,255,255,0.2)',
         backgroundColor:"#0a293e",
+    },
+    Img: {
+        width:150,
+        height:150, 
+        position:'absolute', 
+        top:'35%', 
+        left:-20
     },
 
 // --------Body----------------- // 

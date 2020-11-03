@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native'
 import logo from '../../assets/logo.png'
 
+import image from '../../assets/womanSeated.png'
 
 const Login = () => {
     const [hidePass, setHidePass] = useState(true)
@@ -18,7 +19,7 @@ const Login = () => {
 
     return (
         <View style={globalStyles.container}>
-
+            <Image source={image} style={styles.Img}/>
             <View style={globalStyles.header}>
                 <View style={styles.logoContainer}>
                     <Image source={logo} style={styles.logo} />

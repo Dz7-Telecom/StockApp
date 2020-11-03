@@ -14,6 +14,13 @@ export default StyleSheet.create({
         borderBottomStartRadius:30,
     },
 
+    img: {
+        width:50,
+        height:110, 
+        position:'absolute', 
+        top:100, 
+        left:45
+    },
     hallo: {
         fontSize:30,
         fontWeight:'bold',

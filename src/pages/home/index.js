@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text,TouchableOpacity, Alert} from 'react-native';
+import { View, Text,TouchableOpacity, Alert, Image} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-
+import Img from '../../assets/person.png'
 import globalStyles from '../../styles/globalStyles';
 import styles from './styles';
 
@@ -11,7 +11,7 @@ const Home = () => {
 
     return (
         <View style={globalStyles.container}>
-
+            <Image source={Img} style={styles.img}/>
             <View style={globalStyles.header}>
                 <Text style={styles.hallo}>Olá Dheph ;)</Text>
             </View>
