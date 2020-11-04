@@ -15,8 +15,8 @@ export default StyleSheet.create({
 
     },
     moreInformations: {
-        position:'absolute',
-        right:-10,
+        position: 'absolute',
+        right: -10,
 
     },
     listTitle: {
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     },
     horizontalList: {
         margin: '20%',
-        marginLeft:'1%',
+        marginLeft: '1%',
         width: '100%',
         height: '20%',
     },
@@ -50,7 +50,7 @@ export default StyleSheet.create({
         marginHorizontal: 15,
         borderWidth: 3,
         borderColor: '#aeb2b5',
-        height:'20%',
+        height: '20%',
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center'
@@ -64,7 +64,7 @@ export default StyleSheet.create({
         marginTop: '10%'
     },
     checkItemsGroup: {
-        width:330,
+        width: 330,
         margin: 10,
         backgroundColor: 'rgba(0,0,0,0.1)',
         padding: '10%',
