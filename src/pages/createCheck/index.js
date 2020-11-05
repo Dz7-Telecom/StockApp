@@ -14,11 +14,21 @@ import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState([]);
   const [pendingA, setPending] = useState(true);
+
+  const navigation = useNavigation();
+
+  
+
+  function makeSignature(){
+    navigation.navigate('createsignature');
+    setOpen(false)
+  }
 
   function viewItems() {
     setOpen(true);
@@ -348,7 +358,7 @@ const CreateCheck = () => {
                 <View style={{ marginLeft: 10 }}>
                   <TouchableOpacity
                     style={{ bottom: 30, left: 350 }}
-                    onPress={() => setPending(false)}
+                    onPress={() => makeSignature()}
                   >
                     <Feather name="alert-octagon" size={30} color="red" />
                   </TouchableOpacity>
