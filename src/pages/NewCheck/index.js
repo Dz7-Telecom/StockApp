@@ -8,6 +8,7 @@ import {
   Modal,
   ScrollView,
   Image,
+  ImageBackground,
 } from "react-native";
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
@@ -16,14 +17,15 @@ import Img from "../../assets/seatedWoman.png";
 import skyPerson from "../../assets/sky.png";
 import { useNavigation } from "@react-navigation/native";
 
+import cloudBackground from '../../assets/cloudBackground.jpg'
 const Falling = (props) => {
   const [falling] = useState(new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(falling, {
-      toValue: 300,
-      duration: 10000,
-      delay: 100,
+      toValue: -800,
+      duration: 30000,
+      delay: 600,
     }).start();
   }, []);
 
@@ -48,27 +50,31 @@ const NewCheck = () => {
     navigation.navigate("createcheck");
   }
   return (
+    <ImageBackground source={cloudBackground} style={{ flex: 1,
+      resizeMode: "cover",
+      justifyContent: "center",}}>
     <View style={globalStyles.container}>
       <View style={globalStyles.header}>
         <Text style={styles.hallo}>Dheph, Selecione um Técnico</Text>
       </View>
 
-      <Falling style={{ bottom: 400, width: 250, height: 50 }}>
+      <Falling style={styles.fallingStyle}>
         <Image source={skyPerson} style={styles.skyImg} />
       </Falling>
 
-      <View style={styles.body}>
-        <Image source={Img} style={styles.personImg} />
+      <TouchableOpacity style={styles.body} onPress={() => setOpen(true)}>
+        
+          <Image  source={Img} style={styles.personImg} />
 
-        <TouchableOpacity
+        <View
           style={styles.selection}
-          onPress={() => setOpen(true)}
+          
         >
-          <Text style={{ color: "#aeb2b5", fontSize: 15, fontWeight: "bold" }}>
+          <Text style={styles.selectionText}>
             Buscar
           </Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       {
         <Modal
           presentationStyle="formSheet"
@@ -146,6 +152,7 @@ const NewCheck = () => {
         </Modal>
       }
     </View>
+    </ImageBackground>
   );
 };
 

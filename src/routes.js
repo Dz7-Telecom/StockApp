@@ -9,6 +9,8 @@ import LastCheck from './pages/LastCheck';
 import ViewGroups from './pages/ViewGroups';
 import CreateCheck from './pages/createCheck';
 import Signature from './pages/Signature';
+import MoreDetails from './pages/MoreDetails';
+import ItemDetails from './pages/ItemDetails';
 
 
 const AppStack = createStackNavigator();
@@ -26,6 +28,8 @@ export default function Routes() {
                 <AppStack.Screen name="viewgroups" component={ViewGroups}/>            
                 <AppStack.Screen name="createcheck" component={CreateCheck}/>            
                 <AppStack.Screen name="createsignature" component={Signature}/>            
+                <AppStack.Screen name="moredetails" component={MoreDetails}/>            
+                <AppStack.Screen name="itemdetails" component={ItemDetails}/>            
             </AppStack.Navigator>
         </NavigationContainer>
     )

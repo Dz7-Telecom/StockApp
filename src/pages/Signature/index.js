@@ -23,7 +23,7 @@ function uuidv4() {
   });
 }
 
-export default class App extends Component {
+export default class Signature extends Component {
   state = {
     image: null,
     strokeColor: 0xffffff,
@@ -60,7 +60,7 @@ export default class App extends Component {
 
   onChangeAsync = async () => {
     const { uri } = await this.sketch.takeSnapshotAsync();
-
+    console.log(uri)
     this.setState({
       image: { uri },
       strokeWidth: 5,

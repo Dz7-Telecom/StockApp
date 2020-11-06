@@ -6,56 +6,62 @@ export default StyleSheet.create({
     body: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#aeb2b5',
-        borderTopLeftRadius: 160,
-        borderTopRightRadius: 160,
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        borderTopLeftRadius: 180,
+        borderTopRightRadius: 180,
         borderBottomStartRadius: 100,
         borderBottomEndRadius: 100,
-        borderColor: '#0a293e',
-        borderWidth: 15,
-        marginBottom: 5,
-        width: '100%',
-        height: '37%'
+        marginBottom: '5%',
+        marginLeft:'10%',
+        width: '80%',
+        height: '30%',
     },
 
     personImg: {
-        width: 250,
-        height: 199,
+        width: '60%',
+        height: '100%',
         position: 'absolute',
-        bottom: 232
+        bottom: '58%'
     },
     skyImg: {
-        width: 300,
-        height: 375,
+        width: '80%',
+        height: '500%',
         position: 'absolute',
-        bottom: 300
+        // bottom: 
 
     },
 
+    fallingStyle: {
+        bottom: 300, 
+        width: 250, 
+        height: 50 
+    },
 
     hallo: {
-        fontSize: 17,
-        backgroundColor: 'transparent',
-        padding: 20,
-        borderWidth: 2,
-        borderColor: '#0a293e',
-        borderRadius: 50,
-        borderBottomLeftRadius: 1,
+        fontSize: 20,
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        padding: '10%',
+        borderRadius: 60,
+        borderBottomLeftRadius: 10,
         color: '#0a293e'
     },
 
     selection: {
-        bottom: 20,
+        bottom: '10%',
         padding: 10,
-        backgroundColor: '#0a293e',
+        backgroundColor: 'transparent',
         width: '30%',
         height: '50%',
-        borderTopLeftRadius: 190,
-        borderTopRightRadius: 190,
-        borderBottomStartRadius: 180,
-        borderBottomEndRadius: 180,
+        borderRadius:185,
+        borderBottomColor:'#0a293e',
+        borderBottomWidth:4,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    selectionText: {
+        color: "#0a293e", 
+        fontSize: 20, 
+        fontWeight: "bold" 
     },
 
     submitButton: {
@@ -83,7 +89,7 @@ export default StyleSheet.create({
     modalHeader: {
         flex: 1,
         alignItems: 'center',
-        marginBottom: 100
+        marginBottom: '20%'
     },
     modalSearchText: {
         // marginTop:20,
@@ -115,6 +121,7 @@ export default StyleSheet.create({
         borderTopRightRadius: 190,
         borderBottomStartRadius: 200,
         borderBottomEndRadius: 180,
+        marginBottom:'10%'
     },
     modalItemText: {
         color: '#aeb2b5',

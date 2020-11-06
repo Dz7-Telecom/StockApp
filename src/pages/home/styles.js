@@ -15,11 +15,11 @@ export default StyleSheet.create({
     },
 
     img: {
-        width: 50,
-        height: 110,
+        width: '15%',
+        height: '20%',
         position: 'absolute',
-        top: 100,
-        left: 45
+        top: '8.5%',
+        left: '10%'
     },
     hallo: {
         fontSize: 30,

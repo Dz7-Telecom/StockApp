@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
 
 export default StyleSheet.create({
+
   pixi: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
@@ -16,10 +17,16 @@ export default StyleSheet.create({
     width: "50%",
     height: "100%",
   },
+  handMan: {
+    width: '30%',
+    height: '34%',
+    position: "absolute",
+    bottom: "96%",
+  },
   checkGroup: {
     backgroundColor: "rgba(255,255,255,0.1)",
     borderRadius: 200,
-    bottom: 110,
+    bottom: '15%',
     height: "135%",
     marginBottom: 10,
   },

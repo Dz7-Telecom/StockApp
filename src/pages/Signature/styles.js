@@ -20,7 +20,7 @@ export default StyleSheet.create({
     borderTopColor: "#0a293e",
   },
   label: {
-    bottom: "97%",
+    bottom: "95%",
     width: "100%",
     padding: 5,
     alignItems: "center",

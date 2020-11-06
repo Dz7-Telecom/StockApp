@@ -11,7 +11,9 @@ import {
 import styles from "./styles";
 
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 const ViewGroups = () => {
+  const navigation = useNavigation();
 
   function moreInformations() {
     Alert.alert(
@@ -33,22 +35,20 @@ const ViewGroups = () => {
         <Text style={styles.listTitle}>Ultimo Check</Text>
 
         <ScrollView
-          style={styles.verticalList}
+          style={styles.horizontalList}
           horizontal
           showsHorizontalScrollIndicator={false}
         >
           <TouchableOpacity
             style={styles.itemStyle}
-            onPress={() =>
-              Alert.alert("verificar mais detalhes", "coming soon")
-            }
+            onPress={() => navigation.navigate("moredetails")}
           >
             <Text style={styles.itemTextStyle}> Ver Detalhes </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.itemStyle}
-            onPress={() => Alert.alert("Imprimir PDF", "coming soon")}
+            onPress={() =>alert('coming soon')}
           >
             <Text style={styles.itemTextStyle}> Imprimir PDF </Text>
           </TouchableOpacity>

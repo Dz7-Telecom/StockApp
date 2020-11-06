@@ -23,11 +23,9 @@ const CreateCheck = () => {
 
   const navigation = useNavigation();
 
-  
-
-  function makeSignature(){
-    navigation.navigate('createsignature');
-    setOpen(false)
+  function makeSignature() {
+    navigation.navigate("createsignature");
+    setOpen(false);
   }
 
   function viewItems() {
@@ -42,22 +40,13 @@ const CreateCheck = () => {
           onPress={() => viewItems()}
         >
           <Feather name="arrow-right" size={20} />
-          {/* <Text style={styles.submitButtonText}>  Sair </Text> */}
         </TouchableOpacity>
 
         <Text style={{ fontSize: 30, textAlign: "center" }}>Let's Check!</Text>
       </View>
 
       <View style={styles.body}>
-        <Image
-          source={handMan}
-          style={{
-            width: 100,
-            height: 150,
-            position: "absolute",
-            bottom: "97%",
-          }}
-        />
+        <Image source={handMan} style={styles.handMan} />
 
         <View style={styles.checkGroup}>
           <ScrollView
@@ -71,14 +60,14 @@ const CreateCheck = () => {
                 Alert.alert("verificar mais detalhes", "coming soon")
               }
             >
-              <Text style={styles.itemTextStyle}> 1 </Text>
+              <Text style={styles.itemTextStyle}> {1}</Text>
 
               <Text style={styles.itemTextStyle}> Alicate De Corte </Text>
 
               <View style={styles.iconsContainer}>
                 <TouchableOpacity
                   style={styles.icons}
-                  onPress={() => setItem(item + ", Alicate de Corte")}
+                  onPress={() => navigation.navigate("itemdetails")}
                 >
                   <Feather
                     name="plus-circle"

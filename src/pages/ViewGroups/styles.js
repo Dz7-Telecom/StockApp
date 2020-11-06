@@ -20,11 +20,13 @@ export default StyleSheet.create({
 
     },
     listTitle: {
+        left:'20%',
         marginTop: '15%',
         color: "#aeb2b5",
         fontSize: 35,
         fontWeight: 'bold',
         textAlign: 'center',
+        position:'absolute'
     },
     body: {
         flex: 1,
@@ -38,10 +40,10 @@ export default StyleSheet.create({
 
     },
     horizontalList: {
-        margin: '20%',
+        margin: '10%',
         marginLeft: '1%',
         width: '100%',
-        height: '20%',
+        height: '30%',
     },
 
     itemStyle: {
