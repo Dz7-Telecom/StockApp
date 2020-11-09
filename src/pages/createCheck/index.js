@@ -14,7 +14,7 @@ import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useRoute} from "@react-navigation/native";
 
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
@@ -22,7 +22,9 @@ const CreateCheck = () => {
   const [pendingA, setPending] = useState(true);
 
   const navigation = useNavigation();
-
+  const routes = useRoute();
+  const techicianData = routes.params.technicianData;
+  Alert.alert(`técnico escolhido`,`${techicianData.name}`)
   function makeSignature() {
     navigation.navigate("createsignature");
     setOpen(false);
@@ -41,7 +43,7 @@ const CreateCheck = () => {
         >
           <Feather name="arrow-right" size={20} />
         </TouchableOpacity>
-
+        <Feather name="help-circle" size={200} />
         <Text style={{ fontSize: 30, textAlign: "center" }}>Let's Check!</Text>
       </View>
 
@@ -60,7 +62,6 @@ const CreateCheck = () => {
                 Alert.alert("verificar mais detalhes", "coming soon")
               }
             >
-              <Text style={styles.itemTextStyle}> {1}</Text>
 
               <Text style={styles.itemTextStyle}> Alicate De Corte </Text>
 

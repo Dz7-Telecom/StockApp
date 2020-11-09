@@ -102,9 +102,9 @@ export default StyleSheet.create({
         borderRadius: 20
     },
     modalIcon: {
-        backgroundColor: 'rgba(0,0,0,0.3)',
+        backgroundColor: 'rgba(0,0,0,0.1)',
         padding: 5,
-        borderRadius: 15,
+        borderRadius: 55,
     },
     modalButtonIcon: {
         left: 140,
@@ -129,6 +129,7 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     modalItemsContainer: {
+        
     },
 
     modalItems: {
@@ -138,6 +139,17 @@ export default StyleSheet.create({
         borderRadius: 50,
         borderWidth: 3,
         borderColor: '#aeb2b5'
+    },
+    technician: {
+        width:130,
+        height:130,
+        position:'absolute',
+        backgroundColor:"rgba(0,0,0,0.5)",
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:200,
+        left:10,
+        top:20
     }
 
 })

@@ -11,6 +11,7 @@ import CreateCheck from './pages/createCheck';
 import Signature from './pages/Signature';
 import MoreDetails from './pages/MoreDetails';
 import ItemDetails from './pages/ItemDetails';
+import insertItems from './pages/insertItems';
 
 
 const AppStack = createStackNavigator();
@@ -30,6 +31,7 @@ export default function Routes() {
                 <AppStack.Screen name="createsignature" component={Signature}/>            
                 <AppStack.Screen name="moredetails" component={MoreDetails}/>            
                 <AppStack.Screen name="itemdetails" component={ItemDetails}/>            
+                <AppStack.Screen name="insertitems" component={insertItems}/>            
             </AppStack.Navigator>
         </NavigationContainer>
     )

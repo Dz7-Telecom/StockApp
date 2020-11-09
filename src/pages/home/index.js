@@ -5,15 +5,18 @@ import { Feather } from "@expo/vector-icons";
 import Img from "../../assets/person.png";
 import globalStyles from "../../styles/globalStyles";
 import styles from "./styles";
+import syncStorage from "sync-storage";
 
 const Home = () => {
   const navigation = useNavigation();
+
+  const name = syncStorage.get('name');
 
   return (
     <View style={globalStyles.container}>
       <Image source={Img} style={styles.img} />
       <View style={globalStyles.header}>
-        <Text style={styles.hallo}>Olá Dheph ;)</Text>
+        <Text style={styles.hallo}>Olá {name} ;)</Text>
       </View>
 
       <View style={styles.body}>

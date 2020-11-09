@@ -12,10 +12,16 @@ import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import logo from "../../assets/icon.png";
-
+import SyncStorage from 'sync-storage';
 import image from "../../assets/womanSeated.png";
 
+import api from '../../services/api';
+
+
 const Login = () => {
+  const [username,setUsername] = useState();
+  const [password,setPassword] = useState();
+
   const [hidePass, setHidePass] = useState(true);
 
   const navigation = useNavigation();
@@ -23,6 +29,33 @@ const Login = () => {
   function viewPass() {
     hidePass ? setHidePass(false) : setHidePass(true);
   }
+
+
+  async function handleSubmit(){
+    
+    console.log('usuário' , username);
+    console.log('senha', password);
+
+    await api.post('appSession',{username,password}).then((response) => {
+      
+      if(response.data.name === undefined || response.data.name ===  null){
+        return Alert.alert('usuário não encontrado','por favor tente novamente!')
+      }
+
+
+      SyncStorage.set('id',response.data.id);
+      SyncStorage.set('name',response.data.name);
+      
+      navigation.navigate('home');
+
+      Alert.alert(`Oi ${response.data.name}`,'Bem vindo de volta')
+    })
+    .catch((error) => {
+      Alert.alert('Authentication failed','Ocorreu um erro na busca, por favor tente novamente mais tarde');
+      console.log('ERROR: ' , error)
+    })
+  } 
+
 
   return (
     <View style={globalStyles.container}>
@@ -43,6 +76,8 @@ const Login = () => {
               style={styles.inputText}
               placeholder="example.Dz7"
               placeholderTextColor="#aeb2b5"
+              value={username}
+              onChangeText={text => setUsername(text)}
             />
           </View>
 
@@ -53,6 +88,8 @@ const Login = () => {
               placeholder=". . . . . ."
               secureTextEntry={hidePass}
               placeholderTextColor="#aeb2b5"
+              value={password}
+              onChangeText={text => setPassword(text)}
             />
           </View>
 
@@ -69,7 +106,7 @@ const Login = () => {
 
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={() => navigation.navigate("home")}
+            onPress={() => handleSubmit()}
           >
             <Text style={styles.submitButtonText}> Entrar </Text>
           </TouchableOpacity>
