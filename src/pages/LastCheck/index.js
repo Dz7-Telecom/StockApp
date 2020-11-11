@@ -45,7 +45,6 @@ const LastCheck = () => {
       id: selectedTechnician.id,
       name: selectedTechnician.name,
     };
-    Alert.alert("tecnico escolhido com sucesso");
     navigation.navigate("viewgroups", { technicianData });
   }
 

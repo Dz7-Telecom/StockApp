@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import {
   View,
   Text,
   Image,
-  ScrollView,
   TouchableOpacity,
   Alert,
   Modal,
+  FlatList
 } from "react-native";
 
 import handMan from "../../assets/handman.png";
@@ -14,17 +14,70 @@ import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
 import { Feather } from "@expo/vector-icons";
-import { useNavigation,useRoute} from "@react-navigation/native";
+import { useNavigation} from "@react-navigation/native";
+
+import api from '../../services/api';
+import syncStorage from "sync-storage";
 
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState([]);
+  const [tools, setTools] = useState([]);
   const [pendingA, setPending] = useState(true);
 
   const navigation = useNavigation();
-  const routes = useRoute();
-  const techicianData = routes.params.technicianData;
-  Alert.alert(`técnico escolhido`,`${techicianData.name}`)
+  
+
+  const techicianData = JSON.parse(syncStorage.get('technicianData'));
+
+  useEffect(() => {
+   loadTools()
+   Alert.alert(`técnico escolhido`,`${techicianData.name}`)
+  }, [])
+  
+  async function loadTools(){
+    await api.get('tool').then((response) => {
+      setTools(response.data)
+    })
+  }
+
+  function loadToolsInformation() {
+  
+    return (
+      <FlatList
+        data={tools}
+        showsVerticalScrollIndicator={false}
+        style={styles.horizontalList}
+        keyExtractor={(tool) => String(tool.id)}
+        onEndReachedThreshold={0.1}
+        renderItem={({ item: tool }) => (
+          <View
+          style={styles.itemStyle}
+          onPress={() => Alert.alert("verificar mais detalhes", "coming soon")}>
+
+          <Text style={styles.itemTextStyle}> {tool.name}</Text>
+
+          <View style={styles.iconsContainer}>
+            <TouchableOpacity
+              style={styles.icons}
+              onPress={() => navigateToItemDetails(tool)}
+            >
+              <Feather
+                name="plus-circle"
+                size={30}
+                color="#0a293e"
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        )}
+      />
+    );
+  }
+
+  
+
   function makeSignature() {
     navigation.navigate("createsignature");
     setOpen(false);
@@ -32,6 +85,13 @@ const CreateCheck = () => {
 
   function viewItems() {
     setOpen(true);
+  }
+
+  function navigateToItemDetails(tool){
+    const tools = {
+      tool:tool
+    }
+    navigation.navigate("itemdetails",{tool})
   }
 
   return (
@@ -43,294 +103,20 @@ const CreateCheck = () => {
         >
           <Feather name="arrow-right" size={20} />
         </TouchableOpacity>
-        <Feather name="help-circle" size={200} />
         <Text style={{ fontSize: 30, textAlign: "center" }}>Let's Check!</Text>
       </View>
 
       <View style={styles.body}>
+
         <Image source={handMan} style={styles.handMan} />
 
         <View style={styles.checkGroup}>
-          <ScrollView
-            style={styles.horizontalList}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-          >
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-
-              <Text style={styles.itemTextStyle}> Alicate De Corte </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => navigation.navigate("itemdetails")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-              <Text style={styles.itemTextStyle}> Alicate de Crimpar </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Alicate De Crimpar")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Cavalete P/ Drop </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Cavalete p/Drop")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Estilete </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Estilete")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Etiquetadora </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Etiquetadora")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Notebook </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Notebook")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Lanterna USB </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Lanterna USB")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> C5 </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", C5")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Capacete </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Capacete")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Cinto com Talabarte</Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Cinto com Talabarte")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <View
-              style={styles.itemStyle}
-              onPress={() =>
-                Alert.alert("verificar mais detalhes", "coming soon")
-              }
-            >
-              <Text style={styles.itemTextStyle}> </Text>
-
-              <Text style={styles.itemTextStyle}> Fio CCI </Text>
-
-              <View style={styles.iconsContainer}>
-                <TouchableOpacity
-                  style={styles.icons}
-                  onPress={() => setItem(item + ", Fio CCI")}
-                >
-                  <Feather
-                    name="plus-circle"
-                    size={30}
-                    color="#0a293e"
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
+          
+          {loadToolsInformation()}
+         
         </View>
       </View>
+
       {
         <Modal
           presentationStyle="formSheet"
@@ -366,6 +152,7 @@ const CreateCheck = () => {
               ) : (
                 <View />
               )}
+
             </View>
 
             <View style={styles.modalBody}>

@@ -83,6 +83,7 @@ const NewCheck = () => {
       id: selectedTechnician.id,
       name: selectedTechnician.name
     }
+    syncStorage.set('technicianData',JSON.stringify(technicianData))
     navigation.navigate("createcheck",{technicianData});
 
   }

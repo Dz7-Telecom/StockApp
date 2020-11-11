@@ -29,7 +29,6 @@ const ViewGroups = () => {
           style={styles.moreInformations}
           onPress={() => moreInformations()}
         >
-          <Feather name="help-circle" size={30} color="#aeb2b5" />
         </TouchableOpacity>
 
         <Text style={styles.listTitle}>Ultimo Check</Text>

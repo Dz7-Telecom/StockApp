@@ -4,13 +4,14 @@ import { Alert, Text, View } from "react-native";
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 import { TextInput, TouchableOpacity, FlatList } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useRoute,useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
 const insertItems = () => {
   const insertion = [];
 
   const routes = useRoute();
+  const navigation = useNavigation();
   const quantity = routes.params.quantity;
 
   const counter = quantity;
@@ -57,7 +58,7 @@ const insertItems = () => {
 
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={() => Alert.alert("opa", "coming soon nigga ;)")}
+          onPress={() => navigation.navigate('createcheck')}
         >
           <Text style={styles.submitText}> Salvar </Text>
         </TouchableOpacity>

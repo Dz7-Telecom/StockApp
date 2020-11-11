@@ -1,6 +1,6 @@
 import Expo from "expo";
 import * as ExpoPixi from "expo-pixi";
-import React, { Component } from "react";
+import React, { Component} from "react";
 import {
   StatusBar,
   Image,
@@ -31,6 +31,7 @@ export default class Signature extends Component {
     appState: AppState.currentState,
     
   };
+
 
   handleAppStateChangeAsync = (nextAppState) => {
     if (

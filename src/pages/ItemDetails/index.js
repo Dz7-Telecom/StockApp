@@ -3,26 +3,25 @@ import { View, Text, TouchableOpacity,TextInput,Alert,Image} from "react-native"
 
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useRoute } from "@react-navigation/native";
 
 import girlDribble from '../../assets/seatedPerson.png'
 
 const ItemDetails = () => {
   const [quantity,setQuantity ] = useState()
-
+  
+  const route = useRoute()
   const navigation = useNavigation()
 
-  function handleNext(){
-    
-    
+  const tool = route.params.tool;
 
-  }
 
   return (
     <View style={globalStyles.container}>
       <Image source={girlDribble} style={{width:100,height:100,top:50,position:'absolute'}}/>
       <View style={styles.header}>
         <Text style={{ fontSize: 20 }}> __ G o - C h E C k __ </Text>
+        <Text style={{ fontSize: 20,marginTop:'5%', fontWeight:'bold', borderBottomWidth:1, borderBottomColor:'black',borderRadius:20 }}> {tool.name} </Text>
       </View>
 
       <View style={styles.body}>
