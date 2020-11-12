@@ -152,7 +152,6 @@ const CreateCheck = () => {
               ) : (
                 <View />
               )}
-
             </View>
 
             <View style={styles.modalBody}>
