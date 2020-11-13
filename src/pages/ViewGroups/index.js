@@ -30,63 +30,71 @@ const ViewGroups = () => {
 
   async function searchLastCheck() {
     await api.get(`lastcheck`).then((lastCheckResponse) => {
-    
       setLastCheck(lastCheckResponse.data[0].lastcheck);
     });
   }
   async function loadEquipments() {
-    await api
-      .get(`equipment?&check_id=4`)
-      .then((responseEquipments) => {
-        console.log("equipments " + responseEquipments.data[0]);
-        setEquipments(responseEquipments.data);
-      });
+    await api.get(`equipment?&check_id=4`).then((responseEquipments) => {
+      console.log("equipments " + responseEquipments.data[0]);
+      setEquipments(responseEquipments.data);
+    });
   }
 
   function loadEquipmentsInformation() {
     const newEquipments = equipments;
-    countEquipments()
+    countEquipments();
     function countEquipments() {
-      console.log('----------------------Start-Item-Count-------------------------')
-      
-       newEquipments.filter(multipleVerification)
+      console.log(
+        "----------------------Start-Item-Count-------------------------"
+      );
 
-      function multipleVerification(value){
+      newEquipments.filter(multipleVerification);
+
+      function multipleVerification(value) {
         const multipleItems = [];
 
-        newEquipments.map((item,index) => {
-          if(item.name === value.name){
-              let equipment = {
-                item,
-                local:index
-              }
-              multipleItems.push(equipment);
+        newEquipments.map((item, index) => {
+          if (item.name === value.name) {
+            let equipment = {
+              item,
+              local: index,
+            };
+            multipleItems.push(equipment);
           }
-        })
-        
-        console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
-        console.log('item ' + value.name)
-        console.log('quantidade de itens: ' + multipleItems.length);
-       
-        newEquipments.map((item) => {
-          console.log(`ITEM: ${item.name}, QUANTIDADE: ${item.quantity}`)
-            item.quantity = multipleItems.length
-        })
-        multipleItems.map((index,i) => {
-          console.log('INDEX: ' + index.local + ' - no numero : ' + i+'°');
-          // if(i > 0  ){
-          //   newEquipments.splice(i,1);
-          // }
-        })
-        console.log(`\n TIPO: ${newEquipments[0].type}, NOME: ${newEquipments[0].name}, QUANTIDADE: ${newEquipments[0].quantity}`)
-        console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+')
-        
+        });
 
+        console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+        console.log("item " + value.name);
+        console.log("quantidade de itens: " + multipleItems.length);
+
+        newEquipments.map((item) => {
+          console.log(`ITEM: ${item.name}, QUANTIDADE: ${item.quantity}`);
+          if (value.name === item.name) {
+            item.quantity = multipleItems.length;
+            if(value.patrimony === null){
+              item.patrimony = ' - '
+              multipleItems.map((index, i) => {
+                console.log("INDEX: " + index.local + " - no numero : " + i + "°");
+                if(i > 0  ){
+                  console.log('Item a ser apagado ' + index.item.name + ' na localização ' + index.local);
+                  newEquipments.splice(index.local,1)
+                }
+              });
+            }
+          }
+        });
+
+       
+        console.log(
+          `\n TIPO: ${newEquipments[0].type}, NOME: ${newEquipments[0].name}, QUANTIDADE: ${newEquipments[0].quantity}`
+        );
+        console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
       }
-      console.log('-----------------------End-Item-Count---------------------------')
-      
+      console.log(
+        "-----------------------End-Item-Count---------------------------"
+      );
     }
-    
+
     return (
       <FlatList
         data={newEquipments}
