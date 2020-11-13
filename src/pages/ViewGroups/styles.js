@@ -39,6 +39,21 @@ export default StyleSheet.create({
         borderBottomEndRadius: 1,
 
     },
+
+    viewList:{
+        padding:'5%',
+        textAlign:'center',
+        backgroundColor:'#003352',
+        borderRadius:50,
+        color:"#aeb2b5",
+        fontWeight:'bold',
+        // position:'a',
+        // top:1
+    },
+
+
+
+
     horizontalList: {
         margin: '10%',
         marginLeft: '1%',
@@ -66,7 +81,8 @@ export default StyleSheet.create({
         marginTop: '10%'
     },
     checkItemsGroup: {
-        width: 330,
+        width: 250,
+        height:290,
         margin: 10,
         backgroundColor: 'rgba(0,0,0,0.1)',
         padding: '10%',

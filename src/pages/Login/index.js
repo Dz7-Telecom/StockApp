@@ -48,7 +48,7 @@ const Login = () => {
       
       navigation.navigate('home');
 
-      Alert.alert(`Oi ${response.data.name}`,'Bem vindo de volta')
+      Alert.alert(`Oi ${response.data.name} 🧞‍♂️️ `,'Bem vindo de volta')
     })
     .catch((error) => {
       Alert.alert('Authentication failed','Ocorreu um erro na busca, por favor tente novamente mais tarde');

@@ -6,6 +6,7 @@ import globalStyles from "../../styles/globalStyles";
 import { TextInput, TouchableOpacity, FlatList } from "react-native";
 import { useRoute,useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import syncStorage from "sync-storage";
 
 const insertItems = () => {
   const insertion = [];
@@ -13,7 +14,7 @@ const insertItems = () => {
   const routes = useRoute();
   const navigation = useNavigation();
   const quantity = routes.params.quantity;
-
+  const name = syncStorage.get('name')
   const counter = quantity;
 
   function loadProducts() {
@@ -28,7 +29,7 @@ const insertItems = () => {
   return (
     <View style={globalStyles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.help} onPress={() => Alert.alert('Ajuda ?','Caso o equipamento possua patrimônio acrescente no tal, se não possuir deixe em branco, no final é só salvar')}>
+        <TouchableOpacity style={styles.help} onPress={() => Alert.alert(`Ajuda ${name}? 🧞‍♂️️` ,'Caso o equipamento possua patrimônio acrescente no tal, se não possuir deixe em branco, no final é só salvar')}>
           <Feather name="help-circle" size={30}  />
         </TouchableOpacity>
         <Text style={styles.title}> Ficha de cadastro</Text>
