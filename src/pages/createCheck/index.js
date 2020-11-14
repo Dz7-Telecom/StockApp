@@ -32,11 +32,10 @@ const CreateCheck = () => {
 
   useEffect(() => {
    loadTools()
-   Alert.alert(`técnico escolhido`,`${techicianData.name}`)
   }, [])
   
   async function loadTools(){
-    await api.get('tool').then((response) => {
+    await api.get('type').then((response) => {
       setTools(response.data)
     })
   }
