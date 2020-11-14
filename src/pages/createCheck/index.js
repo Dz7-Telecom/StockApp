@@ -87,9 +87,7 @@ const CreateCheck = () => {
   }
 
   function navigateToItemDetails(tool){
-    const tools = {
-      tool:tool
-    }
+   
     navigation.navigate("itemdetails",{tool})
   }
 
