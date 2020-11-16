@@ -92,10 +92,6 @@ const ViewGroups = () => {
         });
       }
     }
-
-    return (
-      newEquipments
-    );
   }
 
   function moreInformations() {
@@ -122,9 +118,6 @@ const ViewGroups = () => {
 
   async function navigateToDetails(){
 
-    
-    // await loadEquipments();
-    // await loadEquipmentsInformation()
     while(counter === 0 ){
         await loadEquipments()
     }
