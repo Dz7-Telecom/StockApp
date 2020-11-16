@@ -56,7 +56,6 @@ const ViewGroups = () => {
 
   function loadEquipmentsInformation() {
     const newEquipments = equipments;
-    console.log('EQUIPMENTS QUANTITY : ' + equipments.length)
     console.log('NEW EQUIPMENTS QUANTITY : ' + newEquipments.length)
     countEquipments();
     function countEquipments() {
