@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
-  FlatList
+  FlatList,
 } from "react-native";
 
 import handMan from "../../assets/handman.png";
@@ -14,34 +14,32 @@ import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
 import { Feather } from "@expo/vector-icons";
-import { useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-import api from '../../services/api';
+import api from "../../services/api";
 import syncStorage from "sync-storage";
 
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState([]);
+  const [item, setItem] = useState(false);
   const [tools, setTools] = useState([]);
   const [pendingA, setPending] = useState(true);
 
   const navigation = useNavigation();
-  
 
-  const techicianData = JSON.parse(syncStorage.get('technicianData'));
+  const techicianData = JSON.parse(syncStorage.get("technicianData"));
 
   useEffect(() => {
-   loadTools()
-  }, [])
-  
-  async function loadTools(){
-    await api.get('type').then((response) => {
-      setTools(response.data)
-    })
+    loadTools();
+  }, []);
+
+  async function loadTools() {
+    await api.get("type").then((response) => {
+      setTools(response.data);
+    });
   }
 
   function loadToolsInformation() {
-  
     return (
       <FlatList
         data={tools}
@@ -50,32 +48,40 @@ const CreateCheck = () => {
         keyExtractor={(tool) => String(tool.id)}
         onEndReachedThreshold={0.1}
         renderItem={({ item: tool }) => (
-          <View
-          style={styles.itemStyle}
-          onPress={() => Alert.alert("verificar mais detalhes", "coming soon")}>
-
-          <Text style={styles.itemTextStyle}> {tool.name}</Text>
-
-          <View style={styles.iconsContainer}>
-            <TouchableOpacity
-              style={styles.icons}
-              onPress={() => navigateToItemDetails(tool)}
+          <TouchableOpacity
+            style={styles.icons}
+            onPress={() => navigateToItemDetails(tool)}
+          >
+            <View
+              style={styles.itemStyle}
+              onPress={() =>
+                Alert.alert("verificar mais detalhes", "coming soon")
+              }
             >
-              <Feather
-                name="plus-circle"
-                size={30}
-                color="#0a293e"
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+              <View style={styles.iconsContainer}>
+                {item ? (
+                  <Feather
+                    name="check-circle"
+                    size={30}
+                    color="rgba(0,255,100,0.6)"
+                    style={styles.icon}
+                  />
+                ) : (
+                  <Feather
+                    name="alert-triangle"
+                    size={30}
+                    color="rgba(255,0,0,0.5)"
+                    style={styles.icon}
+                  />
+                )}
+              </View>
+              <Text style={styles.itemTextStyle}> {tool.name}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     );
   }
-
-  
 
   function makeSignature() {
     navigation.navigate("createsignature");
@@ -86,9 +92,8 @@ const CreateCheck = () => {
     setOpen(true);
   }
 
-  function navigateToItemDetails(tool){
-   
-    navigation.navigate("itemdetails",{tool})
+  function navigateToItemDetails(tool) {
+    navigation.navigate("itemdetails", { tool });
   }
 
   return (
@@ -100,18 +105,16 @@ const CreateCheck = () => {
         >
           <Feather name="arrow-right" size={20} />
         </TouchableOpacity>
-        <Text style={{ fontSize: 30, textAlign: "center" }}>Let's Check!</Text>
+        <Text style={{ fontSize: 30, textAlign: "center" }}>Técnico </Text>
+        <Text style={{ fontSize: 20, textAlign: "center" }}>
+          {techicianData.name}{" "}
+        </Text>
       </View>
 
       <View style={styles.body}>
-
         <Image source={handMan} style={styles.handMan} />
 
-        <View style={styles.checkGroup}>
-          
-          {loadToolsInformation()}
-         
-        </View>
+        <View style={styles.checkGroup}>{loadToolsInformation()}</View>
       </View>
 
       {
@@ -155,7 +158,7 @@ const CreateCheck = () => {
               <TouchableOpacity onPress={() => setOpen(false)}>
                 <Text style={styles.modalBodyText}>
                   {" "}
-                  Item selecionado : {item}
+                  Item selecionado : item
                 </Text>
               </TouchableOpacity>
 
