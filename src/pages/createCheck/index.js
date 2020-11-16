@@ -32,11 +32,10 @@ const CreateCheck = () => {
 
   useEffect(() => {
    loadTools()
-   Alert.alert(`técnico escolhido`,`${techicianData.name}`)
   }, [])
   
   async function loadTools(){
-    await api.get('tool').then((response) => {
+    await api.get('type').then((response) => {
       setTools(response.data)
     })
   }
@@ -88,9 +87,7 @@ const CreateCheck = () => {
   }
 
   function navigateToItemDetails(tool){
-    const tools = {
-      tool:tool
-    }
+   
     navigation.navigate("itemdetails",{tool})
   }
 
