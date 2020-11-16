@@ -23,7 +23,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   patrimony: {
-    marginTop: "25%",
+    marginTop: "20%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -58,24 +58,21 @@ export default StyleSheet.create({
     color: "#aeb2b5",
   },
 
-  quantity: {
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "10%",
-  },
-  quantityText: {
-    fontSize: 20,
-  },
-  quantityResult: {
-    fontSize: 15,
-    fontWeight: "bold",
-    padding: 10,
-  },
   Button: {
     backgroundColor: "#003352",
     padding: 20,
     borderRadius: 50,
     bottom: 0,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  StartButton: {
+    backgroundColor: "#003352",
+    padding: 15,
+    borderRadius: 50,
+    bottom: 10,
+    alignItems:'center',
+    justifyContent:'center'
   },
 
   footer: {
@@ -98,8 +95,8 @@ export default StyleSheet.create({
   },
   threadText: {
     position: "absolute",
-    bottom: "180%",
-    fontSize: 20,
+    bottom: "120%",
+    fontSize: 25,
     fontWeight: "bold",
     borderBottomWidth: 1,
     borderBottomColor: "#13161d",
@@ -107,7 +104,7 @@ export default StyleSheet.create({
   },
 
   threadTextInput: {
-    fontSize: 20,
+    fontSize: 25,
     padding: 10,
   },
   threadVerification: {
@@ -115,7 +112,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    padding: "5%",
+    padding: "15%",
     borderRadius: 30,
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.1)",

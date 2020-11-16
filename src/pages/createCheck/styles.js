@@ -33,7 +33,7 @@ export default StyleSheet.create({
   itemStyle: {
     backgroundColor: "#aeb2b5",
     padding: "15%",
-    marginVertical: 30,
+    marginVertical: 25,
     marginHorizontal: 1.5,
     borderWidth: 3,
     borderColor: "#aeb2b5",
@@ -63,8 +63,7 @@ export default StyleSheet.create({
 
   icons: {
     flexDirection: "column",
-    margin: 10,
-    marginVertical: 15,
+    marginVertical: 10,
   },
 
   submitButton: {
