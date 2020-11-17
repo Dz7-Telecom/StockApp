@@ -14,6 +14,7 @@ import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
+import { FlatList } from "react-native-gesture-handler";
 
 const ItemDetails = () => {
   const [patrimony, setPatrimony] = useState(false);
@@ -24,6 +25,8 @@ const ItemDetails = () => {
   const [end, setEnd] = useState(false);
   const [open, setOpen] = useState(false);
   const [firstPatrimony, setFirstPatrimony] = useState(false);
+  const [equipments, setEquipments] = useState([]);
+  const [patrimonyValue, setPatrimonyValue] = useState('');
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -47,29 +50,40 @@ const ItemDetails = () => {
         setTools(toolsResponse.data);
       });
   }
+
   function patrimonyIsEnabled(value) {
-    console.log(value)
     setPatrimony(value);
-    if(quantity == 1 && patrimony === false){
-      setFirstPatrimony(true)
-     }
-     else{
-       setFirstPatrimony(false)
-     }
+    if (quantity == 1 && patrimony === false) {
+      setFirstPatrimony(true);
+    } else {
+      setFirstPatrimony(false);
+    }
   }
 
   function next() {
-
     let equipmentName = tools[page].name;
-    setQuantity(0);
-    if (patrimony) {
-      setPatrimony(false);
-    }
-
+    let tool = tools[page]
+    let toolData = {
+      type: tool.type,
+      name : tool.name,
+      patrimony: patrimony ? patrimonyValue : null,
+      check_id: null
+    } 
     setEquipment(equipmentName);
+    setEquipments(toolData)
+    // setQuantity(0);
+    // if (patrimony) {
+    //   setPatrimony(false);
+    // }
+    if (quantity > 1 && patrimony === true) {
+      return setOpen(true);
+    }
+    
+
     if (page < tools.length - 1) {
+      
       setPage(page + 1);
-      setEnd(false);
+      // setEnd(false);
     } else {
       setEnd(true);
     }
@@ -83,6 +97,10 @@ const ItemDetails = () => {
       setEnd(false);
     }
   }
+
+  // async function handleSubmit(){
+    
+  // }
 
   return (
     <View style={globalStyles.container}>
@@ -142,7 +160,7 @@ const ItemDetails = () => {
                 />
               </View>
 
-              {firstPatrimony ? 
+              {firstPatrimony ? (
                 <View style={styles.patrimonyVerification}>
                   <Text style={styles.patrimonyText}>Insira o Patrimônio</Text>
                   <TextInput
@@ -150,11 +168,13 @@ const ItemDetails = () => {
                     style={styles.patrimonyInput}
                     placeholder="Ex..: 123456"
                     placeholderTextColor="#aeb2b5"
+                    value={patrimonyValue}
+                    onChangeText={(item) =>  setPatrimonyValue(item)}
                   />
                 </View>
-               : 
+              ) : (
                 <View />
-              }
+              )}
               <View style={styles.quantity}>
                 <Text style={styles.threadTextInput}>Quantidade</Text>
                 <View style={styles.insertView}>
@@ -209,7 +229,23 @@ const ItemDetails = () => {
           visible={open}
         >
           <View>
-            <Text> Adicionar quantidade mano </Text>
+            <Text>
+              {" "}
+              Aqui você pode adicionar os patrimônios dos items selecionados{" "}
+            </Text>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={tools}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item: equipment }) => (
+                <View>
+                  <Text> Lista de items {equipment.name}</Text>
+                </View>
+              )}
+            />
+            <TouchableOpacity onPress={() => setOpen(false)}>
+              <Text>Clique aqui para finalizar</Text>
+            </TouchableOpacity>
           </View>
         </Modal>
       }
