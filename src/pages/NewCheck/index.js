@@ -77,13 +77,14 @@ const NewCheck = () => {
   }
 
   async function handleSelection(selectedTechnician){
-
+    
     setOpen(false);
     const technicianData = {
       id: selectedTechnician.id,
       name: selectedTechnician.name
     }
     syncStorage.set('technicianData',JSON.stringify(technicianData))
+    syncStorage.set('checkCounter',0);
     navigation.navigate("createcheck",{technicianData});
 
   }

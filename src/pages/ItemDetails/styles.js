@@ -12,15 +12,16 @@ export default StyleSheet.create({
   },
   body: {
     flex: 5,
-    backgroundColor: "rgba(0,0,0,0.1)",
+    backgroundColor: "#0a293e",
     justifyContent: "center",
     alignItems: "center",
   },
   Equipment: {
-    fontSize: 20,
+    fontSize: 45,
     fontWeight: "bold",
     borderBottomColor: "#0a293e",
     borderBottomWidth: 1,
+    color:'#fff'
   },
   patrimony: {
     marginTop: "20%",
@@ -35,6 +36,7 @@ export default StyleSheet.create({
   patrimonyText: {
     fontSize: 20,
     padding: 10,
+    color:'#fff'
   },
   patrimonyVerification: {
     flexDirection: "column",
@@ -55,7 +57,7 @@ export default StyleSheet.create({
     padding: 10,
     textAlign: "center",
     backgroundColor: "#003352",
-    color: "#aeb2b5",
+    color: "#fff",
   },
 
   Button: {
@@ -92,6 +94,7 @@ export default StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+
   },
   threadText: {
     position: "absolute",
@@ -99,13 +102,16 @@ export default StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     borderBottomWidth: 1,
-    borderBottomColor: "#13161d",
+    borderBottomColor: "#aeb2b5",
     textAlign: "center",
+    color:'#fff'
   },
 
   threadTextInput: {
     fontSize: 25,
     padding: 10,
+    color:'#fff',
+    fontWeight:'bold'
   },
   threadVerification: {
     flexDirection: "column",
@@ -120,13 +126,13 @@ export default StyleSheet.create({
   threadInput: {
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#13161d",
+    borderColor: "#fff",
     width: 100,
     height: 40,
     padding: 10,
     textAlign: "center",
     backgroundColor: "transparent",
-    color: "#003352",
+    color: "#fff",
     fontWeight: "bold",
   },
 });

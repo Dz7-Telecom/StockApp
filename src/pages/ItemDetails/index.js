@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Keyboard
 } from "react-native";
 import globalStyles from "../../styles/globalStyles";
 
@@ -14,6 +15,8 @@ import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
+import { FlatList } from "react-native-gesture-handler";
+import syncStorage from "sync-storage";
 
 const ItemDetails = () => {
   const [patrimony, setPatrimony] = useState(false);
@@ -24,11 +27,14 @@ const ItemDetails = () => {
   const [end, setEnd] = useState(false);
   const [open, setOpen] = useState(false);
   const [firstPatrimony, setFirstPatrimony] = useState(false);
+  const [equipments, setEquipments] = useState([]);
+  const [patrimonyValue, setPatrimonyValue] = useState('');
 
   const route = useRoute();
   const navigation = useNavigation();
   const typeInformations = route.params.tool;
-
+  const checkCounter = syncStorage.get('checkCounter');
+  
   useEffect(() => {
     loadEquipments();
   }, []);
@@ -47,32 +53,52 @@ const ItemDetails = () => {
         setTools(toolsResponse.data);
       });
   }
+
   function patrimonyIsEnabled(value) {
-    console.log(value)
     setPatrimony(value);
-    if(quantity == 1 && patrimony === false){
-      setFirstPatrimony(true)
-     }
-     else{
-       setFirstPatrimony(false)
-     }
+    if (quantity == 1 && patrimony === false) {
+      setFirstPatrimony(true);
+    } else {
+      setFirstPatrimony(false);
+    }
+  }
+
+  function saveEquipment(tool){
+    syncStorage.set(`equipment ${checkCounter}`,JSON.stringify(tool));
+    syncStorage.set('checkCounter',checkCounter+1);
   }
 
   function next() {
-
+    Keyboard.dismiss()
     let equipmentName = tools[page].name;
-    setQuantity(0);
-    if (patrimony) {
-      setPatrimony(false);
-    }
+    let tool = tools[page]
+    
+    let toolData = {
+      id:checkCounter,
+      type: tool.type,
+      name : tool.name,
+      patrimony: patrimony ? patrimonyValue : null,
+      check_id: null,
+      quantity:quantity
+    } 
 
     setEquipment(equipmentName);
+    saveEquipment(toolData)
+    if (quantity > 1 && patrimony === true) {
+      return setOpen(true);
+    }
+
     if (page < tools.length - 1) {
+      
       setPage(page + 1);
-      setEnd(false);
     } else {
       setEnd(true);
     }
+    setQuantity(0);
+    setPatrimony(false);
+    setPatrimonyValue(null);
+    setFirstPatrimony(false)
+    
   }
 
   function back() {
@@ -116,7 +142,7 @@ const ItemDetails = () => {
                     value={quantity}
                     onChangeText={(number) => setQuantity(number)}
                   />
-                  <Text style={{ marginLeft: "3%" }}> M </Text>
+                  <Text style={{ marginLeft: "3%" ,color:'#aeb2b5'}}> M </Text>
                 </View>
               </View>
             </View>
@@ -138,11 +164,11 @@ const ItemDetails = () => {
                 <Switch
                   value={patrimony}
                   onValueChange={(value) => patrimonyIsEnabled(value)}
-                  thumbColor={patrimony ? "#003352" : "#13161d"}
+                  thumbColor={patrimony ? "#003352" : "#aeb2b4"}
                 />
               </View>
 
-              {firstPatrimony ? 
+              {firstPatrimony ? (
                 <View style={styles.patrimonyVerification}>
                   <Text style={styles.patrimonyText}>Insira o Patrimônio</Text>
                   <TextInput
@@ -150,11 +176,13 @@ const ItemDetails = () => {
                     style={styles.patrimonyInput}
                     placeholder="Ex..: 123456"
                     placeholderTextColor="#aeb2b5"
+                    value={patrimonyValue}
+                    onChangeText={(item) =>  setPatrimonyValue(item)}
                   />
                 </View>
-               : 
+              ) : (
                 <View />
-              }
+              )}
               <View style={styles.quantity}>
                 <Text style={styles.threadTextInput}>Quantidade</Text>
                 <View style={styles.insertView}>
@@ -162,7 +190,7 @@ const ItemDetails = () => {
                     keyboardType="numeric"
                     style={styles.threadInput}
                     placeholder="Ex..: 100"
-                    placeholderTextColor="#0a293e"
+                    placeholderTextColor="#aeb2b5"
                     value={quantity}
                     onChangeText={(number) => setQuantity(number)}
                   />
@@ -209,7 +237,23 @@ const ItemDetails = () => {
           visible={open}
         >
           <View>
-            <Text> Adicionar quantidade mano </Text>
+            <Text>
+              {" "}
+              Aqui você pode adicionar os patrimônios dos items selecionados{" "}
+            </Text>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={tools}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item: equipment }) => (
+                <View>
+                  <Text> Lista de items {equipment.name}</Text>
+                </View>
+              )}
+            />
+            <TouchableOpacity onPress={() => setOpen(false)}>
+              <Text>Clique aqui para finalizar</Text>
+            </TouchableOpacity>
           </View>
         </Modal>
       }

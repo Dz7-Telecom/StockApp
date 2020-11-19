@@ -13,26 +13,59 @@ import handMan from "../../assets/handman.png";
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
-import { Feather } from "@expo/vector-icons";
+import { Feather, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import api from "../../services/api";
 import syncStorage from "sync-storage";
-
+let equipmentData = [];
+let equipmentList = [];
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState(false);
   const [tools, setTools] = useState([]);
   const [pendingA, setPending] = useState(true);
+  const [load, setLoad] = useState(false);
 
   const navigation = useNavigation();
 
   const techicianData = JSON.parse(syncStorage.get("technicianData"));
+  syncStorage.set("checkOn", true);
+  const counter = syncStorage.get("checkCounter");
 
   useEffect(() => {
     loadTools();
-  }, []);
+    // loadEquipments();
+  }, [])
+  function clearArray(item){
+    console.log(item)
+    let result = []
+    equipmentList.map((equipment,index) => {
 
+      if(equipment.name === item.name && item.patrimony === null){
+        if(equipment.quantity === 0){
+          equipmentList.splice(index,1)
+        }
+        result.push(index)
+      }
+    })
+
+    result.map((indexes,i) => {
+      console.log(indexes)
+      if(i > 0){
+        console.log("sendo apagado " + indexes)
+        equipmentList.splice(i,1)
+      }
+    })
+    // console.log(result)
+  }
+  function loadEquipments() {
+    for (let i = 0; i < counter; i++) {
+      console.log(syncStorage.get(`equipment ${i}`));
+      equipmentData.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
+      equipmentList.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
+    }
+    equipmentList.filter(clearArray)
+  }
   async function loadTools() {
     await api.get("type").then((response) => {
       setTools(response.data);
@@ -51,6 +84,7 @@ const CreateCheck = () => {
           <TouchableOpacity
             style={styles.icons}
             onPress={() => navigateToItemDetails(tool)}
+            onPre
           >
             <View
               style={styles.itemStyle}
@@ -59,21 +93,12 @@ const CreateCheck = () => {
               }
             >
               <View style={styles.iconsContainer}>
-                {item ? (
-                  <Feather
-                    name="check-circle"
-                    size={30}
-                    color="rgba(0,255,100,0.6)"
-                    style={styles.icon}
-                  />
-                ) : (
-                  <Feather
-                    name="alert-triangle"
-                    size={30}
-                    color="rgba(255,0,0,0.5)"
-                    style={styles.icon}
-                  />
-                )}
+                <Feather
+                  name="check-circle"
+                  size={30}
+                  color="#003352"
+                  style={styles.icon}
+                />
               </View>
               <Text style={styles.itemTextStyle}> {tool.name}</Text>
             </View>
@@ -84,8 +109,10 @@ const CreateCheck = () => {
   }
 
   function makeSignature() {
-    navigation.navigate("createsignature");
+    setPending(false);
     setOpen(false);
+    setLoad(false)
+    navigation.navigate("createsignature");
   }
 
   function viewItems() {
@@ -96,6 +123,15 @@ const CreateCheck = () => {
     navigation.navigate("itemdetails", { tool });
   }
 
+  async function loading() {
+    await loadEquipments();
+    setLoad(true);
+  }
+
+  function handleSave(){
+    setLoad(false);
+    setOpen(false)
+  }
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.header}>
@@ -155,21 +191,72 @@ const CreateCheck = () => {
             </View>
 
             <View style={styles.modalBody}>
-              <TouchableOpacity onPress={() => setOpen(false)}>
-                <Text style={styles.modalBodyText}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#0a293e",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
                   {" "}
-                  Item selecionado : item
+                  Equipamentos salvos :
                 </Text>
-              </TouchableOpacity>
+                <View style={styles.modalEquipmentList}>
+                  {load ? (
+                    <FlatList
+                      data={equipmentList}
+                      keyExtractor={(equipment) => String(equipment.id)}
+                      style={styles.modalContainer}
+                      renderItem={({ item: equipment }) => (
+                        <View style={styles.modalEquipments}>
+                          
+                          {
+                            equipment.patrimony !== null ? <View/> :<Text style={styles.equipmentText}>
+                            Quantidade: {equipment.quantity}
+                          </Text>
+                          }    
+                          <Text style={styles.equipmentText}>
+                            Equipamento: {equipment.name}
+                          </Text>
+                        
+                          {
+                            equipment.patrimony !== null ? <Text style={styles.equipmentText}>
+                            patrimônio: {equipment.patrimony}
+                          </Text> : <View />
+                          }                      
+                        </View>
+                      )}
+                    />
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => loading()}
+                      style={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <Image
+                        source={require("../../assets/loading.gif")}
+                        style={{ width: 165, height: 165, }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: "#0a293e",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {" "}
+                        Visualizar Equipamentos:
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+              </View>
 
               <TouchableOpacity
                 style={styles.modalSubmitButton}
-                onPress={() =>
-                  Alert.alert(
-                    "Pronto!",
-                    "os item de checagem foram registrados com sucesso!"
-                  )
-                }
+                onPress={() => handleSave()}
               >
                 <Text style={styles.modalSubmitButtonText}> Salvar </Text>
               </TouchableOpacity>
