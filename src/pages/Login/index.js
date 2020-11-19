@@ -17,7 +17,6 @@ import image from "../../assets/womanSeated.png";
 
 import api from '../../services/api';
 
-
 const Login = () => {
   const [username,setUsername] = useState();
   const [password,setPassword] = useState();
@@ -30,7 +29,6 @@ const Login = () => {
     hidePass ? setHidePass(false) : setHidePass(true);
   }
 
-
   async function handleSubmit(){
     
     console.log('usuário' , username);
@@ -42,7 +40,6 @@ const Login = () => {
         return Alert.alert('usuário não encontrado','por favor tente novamente!')
       }
 
-
       SyncStorage.set('id',response.data.id);
       SyncStorage.set('name',response.data.name);
       
@@ -51,11 +48,9 @@ const Login = () => {
       Alert.alert(`Oi ${response.data.name} 🧞‍♂️️ `,'Bem vindo de volta')
     })
     .catch((error) => {
-      Alert.alert('Authentication failed','Ocorreu um erro na busca, por favor tente novamente mais tarde');
-      console.log('ERROR: ' , error)
+      Alert.alert('Ops ocorreu algo inesperado',`${error}`);
     })
   } 
-
 
   return (
     <View style={globalStyles.container}>
@@ -112,9 +107,7 @@ const Login = () => {
           </TouchableOpacity>
         </View>
 
-        {/* end form */}
       </View>
-      {/* end body */}
     </View>
   );
 };

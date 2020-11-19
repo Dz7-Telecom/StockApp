@@ -18,21 +18,33 @@ import { useNavigation } from "@react-navigation/native";
 
 import api from "../../services/api";
 import syncStorage from "sync-storage";
-
+let equipmentData = [];
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
-  const [item, setItem] = useState(false);
   const [tools, setTools] = useState([]);
   const [pendingA, setPending] = useState(true);
 
   const navigation = useNavigation();
 
   const techicianData = JSON.parse(syncStorage.get("technicianData"));
+  syncStorage.set("checkOn", true);
+  const counter = syncStorage.get("checkCounter");
 
   useEffect(() => {
     loadTools();
+    loadEquipments();
   }, []);
 
+  function loadEquipments() {
+    let equipments = [];
+    for (let i = 0; i < counter; i++) {
+      console.log(syncStorage.get(`equipment ${i}`));
+      equipments.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
+      equipmentData.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
+    }
+    // equipmentData = equipments;
+    // console.log(equipments.length)
+  }
   async function loadTools() {
     await api.get("type").then((response) => {
       setTools(response.data);
@@ -51,6 +63,7 @@ const CreateCheck = () => {
           <TouchableOpacity
             style={styles.icons}
             onPress={() => navigateToItemDetails(tool)}
+            onPre
           >
             <View
               style={styles.itemStyle}
@@ -59,21 +72,12 @@ const CreateCheck = () => {
               }
             >
               <View style={styles.iconsContainer}>
-                {item ? (
-                  <Feather
-                    name="check-circle"
-                    size={30}
-                    color="rgba(0,255,100,0.6)"
-                    style={styles.icon}
-                  />
-                ) : (
-                  <Feather
-                    name="alert-triangle"
-                    size={30}
-                    color="rgba(255,0,0,0.5)"
-                    style={styles.icon}
-                  />
-                )}
+                <Feather
+                  name="check-circle"
+                  size={30}
+                  color="#003352"
+                  style={styles.icon}
+                />
               </View>
               <Text style={styles.itemTextStyle}> {tool.name}</Text>
             </View>
@@ -84,8 +88,9 @@ const CreateCheck = () => {
   }
 
   function makeSignature() {
-    navigation.navigate("createsignature");
+    setPending(false);
     setOpen(false);
+    navigation.navigate("createsignature");
   }
 
   function viewItems() {
@@ -155,21 +160,33 @@ const CreateCheck = () => {
             </View>
 
             <View style={styles.modalBody}>
-              <TouchableOpacity onPress={() => setOpen(false)}>
-                <Text style={styles.modalBodyText}>
-                  {" "}
-                  Item selecionado : item
-                </Text>
-              </TouchableOpacity>
+              <View>
+                <Text style={{fontSize:20,color:"#0a293e",fontWeight:'bold',textAlign:'center'}}> Equipamentos salvos :</Text>
+                <View style={styles.modalEquipmentList}>
+
+                  <FlatList
+                    data={equipmentData}
+                    keyExtractor={(equipment) => String(equipment.id)}
+                    style={styles.modalContainer}
+                    renderItem={({ item: equipment }) => (
+                      <View style={styles.modalEquipments}>
+                        <Text style={styles.equipmentText}>
+                          Quantidade: {equipment.quantity}
+                        </Text>
+                      
+                        <Text style={styles.equipmentText}>
+                          Equipamento: {equipment.name}
+                        </Text>
+                      </View>
+                    )}
+                  />
+
+                </View>
+              </View>
 
               <TouchableOpacity
                 style={styles.modalSubmitButton}
-                onPress={() =>
-                  Alert.alert(
-                    "Pronto!",
-                    "os item de checagem foram registrados com sucesso!"
-                  )
-                }
+                onPress={() => setOpen(false)}
               >
                 <Text style={styles.modalSubmitButtonText}> Salvar </Text>
               </TouchableOpacity>

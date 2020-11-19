@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Keyboard
 } from "react-native";
 import globalStyles from "../../styles/globalStyles";
 
@@ -15,6 +16,8 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
 import { FlatList } from "react-native-gesture-handler";
+import syncstorage from 'sync-storage';
+import syncStorage from "sync-storage";
 
 const ItemDetails = () => {
   const [patrimony, setPatrimony] = useState(false);
@@ -31,7 +34,8 @@ const ItemDetails = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const typeInformations = route.params.tool;
-
+  const checkCounter = syncStorage.get('checkCounter');
+  
   useEffect(() => {
     loadEquipments();
   }, []);
@@ -60,30 +64,34 @@ const ItemDetails = () => {
     }
   }
 
+  function saveEquipment(tool){
+    syncStorage.set(`equipment ${checkCounter}`,JSON.stringify(tool));
+    syncStorage.set('checkCounter',checkCounter+1);
+  }
+
   function next() {
+    Keyboard.dismiss()
     let equipmentName = tools[page].name;
     let tool = tools[page]
+    
     let toolData = {
+      id:checkCounter,
       type: tool.type,
       name : tool.name,
       patrimony: patrimony ? patrimonyValue : null,
-      check_id: null
+      check_id: null,
+      quantity:quantity
     } 
+
     setEquipment(equipmentName);
-    setEquipments(toolData)
-    // setQuantity(0);
-    // if (patrimony) {
-    //   setPatrimony(false);
-    // }
+    saveEquipment(toolData)
     if (quantity > 1 && patrimony === true) {
       return setOpen(true);
     }
-    
 
     if (page < tools.length - 1) {
       
       setPage(page + 1);
-      // setEnd(false);
     } else {
       setEnd(true);
     }
@@ -97,10 +105,6 @@ const ItemDetails = () => {
       setEnd(false);
     }
   }
-
-  // async function handleSubmit(){
-    
-  // }
 
   return (
     <View style={globalStyles.container}>
