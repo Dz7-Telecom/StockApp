@@ -16,7 +16,6 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
 import { FlatList } from "react-native-gesture-handler";
-import syncstorage from 'sync-storage';
 import syncStorage from "sync-storage";
 
 const ItemDetails = () => {
@@ -95,6 +94,11 @@ const ItemDetails = () => {
     } else {
       setEnd(true);
     }
+    setQuantity(0);
+    setPatrimony(false);
+    setPatrimonyValue(null);
+    setFirstPatrimony(false)
+    
   }
 
   function back() {
@@ -138,7 +142,7 @@ const ItemDetails = () => {
                     value={quantity}
                     onChangeText={(number) => setQuantity(number)}
                   />
-                  <Text style={{ marginLeft: "3%" }}> M </Text>
+                  <Text style={{ marginLeft: "3%" ,color:'#aeb2b5'}}> M </Text>
                 </View>
               </View>
             </View>
@@ -160,7 +164,7 @@ const ItemDetails = () => {
                 <Switch
                   value={patrimony}
                   onValueChange={(value) => patrimonyIsEnabled(value)}
-                  thumbColor={patrimony ? "#003352" : "#13161d"}
+                  thumbColor={patrimony ? "#003352" : "#aeb2b4"}
                 />
               </View>
 
@@ -186,7 +190,7 @@ const ItemDetails = () => {
                     keyboardType="numeric"
                     style={styles.threadInput}
                     placeholder="Ex..: 100"
-                    placeholderTextColor="#0a293e"
+                    placeholderTextColor="#aeb2b5"
                     value={quantity}
                     onChangeText={(number) => setQuantity(number)}
                   />

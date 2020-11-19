@@ -157,7 +157,7 @@ export default StyleSheet.create({
     width:'80%',
     alignItems:"center",
     justifyContent:'center',
-    left:'10%'
+    left:'10%',
   },
   modalSubmitButtonText: {
     color: "#0a293e",

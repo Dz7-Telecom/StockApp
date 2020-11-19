@@ -13,16 +13,18 @@ import handMan from "../../assets/handman.png";
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 
-import { Feather } from "@expo/vector-icons";
+import { Feather, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import api from "../../services/api";
 import syncStorage from "sync-storage";
 let equipmentData = [];
+let equipmentList = [];
 const CreateCheck = () => {
   const [open, setOpen] = useState(false);
   const [tools, setTools] = useState([]);
   const [pendingA, setPending] = useState(true);
+  const [load, setLoad] = useState(false);
 
   const navigation = useNavigation();
 
@@ -32,18 +34,37 @@ const CreateCheck = () => {
 
   useEffect(() => {
     loadTools();
-    loadEquipments();
-  }, []);
+    // loadEquipments();
+  }, [])
+  function clearArray(item){
+    console.log(item)
+    let result = []
+    equipmentList.map((equipment,index) => {
 
+      if(equipment.name === item.name && item.patrimony === null){
+        if(equipment.quantity === 0){
+          equipmentList.splice(index,1)
+        }
+        result.push(index)
+      }
+    })
+
+    result.map((indexes,i) => {
+      console.log(indexes)
+      if(i > 0){
+        console.log("sendo apagado " + indexes)
+        equipmentList.splice(i,1)
+      }
+    })
+    // console.log(result)
+  }
   function loadEquipments() {
-    let equipments = [];
     for (let i = 0; i < counter; i++) {
       console.log(syncStorage.get(`equipment ${i}`));
-      equipments.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
       equipmentData.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
+      equipmentList.push(JSON.parse(syncStorage.get(`equipment ${i}`)));
     }
-    // equipmentData = equipments;
-    // console.log(equipments.length)
+    equipmentList.filter(clearArray)
   }
   async function loadTools() {
     await api.get("type").then((response) => {
@@ -90,6 +111,7 @@ const CreateCheck = () => {
   function makeSignature() {
     setPending(false);
     setOpen(false);
+    setLoad(false)
     navigation.navigate("createsignature");
   }
 
@@ -101,6 +123,15 @@ const CreateCheck = () => {
     navigation.navigate("itemdetails", { tool });
   }
 
+  async function loading() {
+    await loadEquipments();
+    setLoad(true);
+  }
+
+  function handleSave(){
+    setLoad(false);
+    setOpen(false)
+  }
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.header}>
@@ -161,32 +192,71 @@ const CreateCheck = () => {
 
             <View style={styles.modalBody}>
               <View>
-                <Text style={{fontSize:20,color:"#0a293e",fontWeight:'bold',textAlign:'center'}}> Equipamentos salvos :</Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#0a293e",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                >
+                  {" "}
+                  Equipamentos salvos :
+                </Text>
                 <View style={styles.modalEquipmentList}>
-
-                  <FlatList
-                    data={equipmentData}
-                    keyExtractor={(equipment) => String(equipment.id)}
-                    style={styles.modalContainer}
-                    renderItem={({ item: equipment }) => (
-                      <View style={styles.modalEquipments}>
-                        <Text style={styles.equipmentText}>
-                          Quantidade: {equipment.quantity}
-                        </Text>
-                      
-                        <Text style={styles.equipmentText}>
-                          Equipamento: {equipment.name}
-                        </Text>
-                      </View>
-                    )}
-                  />
-
+                  {load ? (
+                    <FlatList
+                      data={equipmentList}
+                      keyExtractor={(equipment) => String(equipment.id)}
+                      style={styles.modalContainer}
+                      renderItem={({ item: equipment }) => (
+                        <View style={styles.modalEquipments}>
+                          
+                          {
+                            equipment.patrimony !== null ? <View/> :<Text style={styles.equipmentText}>
+                            Quantidade: {equipment.quantity}
+                          </Text>
+                          }    
+                          <Text style={styles.equipmentText}>
+                            Equipamento: {equipment.name}
+                          </Text>
+                        
+                          {
+                            equipment.patrimony !== null ? <Text style={styles.equipmentText}>
+                            patrimônio: {equipment.patrimony}
+                          </Text> : <View />
+                          }                      
+                        </View>
+                      )}
+                    />
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => loading()}
+                      style={{ justifyContent: "center", alignItems: "center" }}
+                    >
+                      <Image
+                        source={require("../../assets/loading.gif")}
+                        style={{ width: 165, height: 165, }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: "#0a293e",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {" "}
+                        Visualizar Equipamentos:
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
 
               <TouchableOpacity
                 style={styles.modalSubmitButton}
-                onPress={() => setOpen(false)}
+                onPress={() => handleSave()}
               >
                 <Text style={styles.modalSubmitButtonText}> Salvar </Text>
               </TouchableOpacity>
